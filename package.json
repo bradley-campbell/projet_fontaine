@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "assert": "^2.0.0",
+    "create-react-app": "^4.0.1",
+    "dotenv": "^8.2.0",
+    "file-system": "^2.2.2",
+    "mongodb": "^3.6.3"
+  }
+}
