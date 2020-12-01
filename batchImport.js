@@ -13,16 +13,15 @@ const fountains = JSON.parse(fs.readFileSync("data/fountains.json"));
 
 const batchImport = async () => {
   const client = await MongoClient(MONGO_URI, options);
-  await client.connect();
-  const db = client.db("projet_fontaine");
-
   try {
+    await client.connect();
+    const db = client.db("projet_fontaine");
     const result = await db.collection("fountains").insertMany(fountains);
     console.log(result);
     assert.equal(fountains.length, result.insertedCount);
-    console.log("res: 201");
+    console.log("SUCCESS");
   } catch (err) {
-    console.log("res 500");
+    console.log("ERROR");
     console.log(err.stack);
   }
 
