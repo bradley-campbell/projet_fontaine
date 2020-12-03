@@ -1,5 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
-import fountains from "./data/fountains";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import mapStyles from "./mapStyles";
 
 import {
@@ -10,6 +9,18 @@ import {
 } from "@react-google-maps/api";
 
 const Map = () => {
+  const [fountains, setFountains] = useState([]);
+
+  const handleFetch = async () => {
+    const data = await fetch("/all");
+    const parsed = await data.json();
+    setFountains(parsed.data);
+  };
+
+  useEffect(() => {
+    handleFetch();
+  }, []);
+
   const libraries = ["places"];
   const mapContainerStyle = {
     width: "100vw",
@@ -36,7 +47,7 @@ const Map = () => {
       googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
       libraries,
     },
-    [libraries]
+    []
   );
 
   if (loadError) return "Error Loading Maps";

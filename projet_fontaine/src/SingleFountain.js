@@ -1,26 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
-const fountain = {
-  _id: "43",
-  Arrondissement: "Ahuntsic-Cartierville",
-  Nom_parc_lieu: "Prieur",
-  Proximité_jeux_repère: "Jardins communautaires",
-  Intersection: "rue Sackville/rue Prieur Est",
-  Etat: "inconnu",
-  Remarque: "accès restreint",
-  Precision_localisation: "orthophotographies",
-  X: "293151.73",
-  Y: "5048680.08",
-  Longitude: "-73.64925573",
-  Latitude: "45.57793119",
-};
+import { useParams } from "react-router-dom";
 
 const SingleFountain = () => {
+  const [fountain, setFountain] = useState({});
+  const { id } = useParams();
+  console.log(id);
+
+  const handleFetch = async () => {
+    const data = await fetch(`/fountain/${id}`);
+    let response = await data.json();
+    setFountain(response.data);
+  };
+
+  useEffect(() => {
+    handleFetch();
+  }, []);
+
+  console.log(fountain);
+
   return (
     <Wrapper>
       <img
-        src={`https://maps.googleapis.com/maps/api/staticmap?center=${+fountain.Latitude},${+fountain.Longitude}&size=300x300&format=jpeg&language=french&markers=icon:/projet_fontaine/public/fountainpin.svg|${+fountain.Latitude},${+fountain.Longitude}&zoom=18&key=${
+        src={`https://maps.googleapis.com/maps/api/staticmap?center=${+fountain.Latitude},${+fountain.Longitude}&size=300x300&format=jpeg&language=french&markers=icon:/projet_fontaine/public/fountainpin.svg|${+fountain.Latitude},${+fountain.Longitude}&zoom=17&key=${
           process.env.REACT_APP_GOOGLE_MAPS_API_KEY
         }&map_id=12483901aee2b3ef`}
       />

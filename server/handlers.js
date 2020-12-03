@@ -19,9 +19,11 @@ const getAllEntries = async (req, res) => {
 
   fountains.forEach((fountain) => (fountainResponse[fountain._id] = fountain));
 
+  console.log(fountainResponse);
+
   fountainResponse.length === 0
     ? res.status(404).json({ status: 400, error: "No data was found" })
-    : res.status(200).json({ status: 200, data: fountainResponse });
+    : res.status(200).json({ status: 200, data: fountains });
 
   client.close();
 };
