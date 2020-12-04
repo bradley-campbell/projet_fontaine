@@ -19,8 +19,6 @@ const getAllEntries = async (req, res) => {
 
   fountains.forEach((fountain) => (fountainResponse[fountain._id] = fountain));
 
-  console.log(fountainResponse);
-
   fountainResponse.length === 0
     ? res.status(404).json({ status: 400, error: "No data was found" })
     : res.status(200).json({ status: 200, data: fountains });
@@ -40,8 +38,6 @@ const getEntryById = async (req, res) => {
   } catch (err) {
     status(500).json({ status: 500, error: "An unknown error has occured" });
   }
-
-  console.log(fountain);
 };
 
 const getEntriesByBorough = (req, res) => {};

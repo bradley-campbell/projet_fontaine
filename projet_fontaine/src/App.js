@@ -6,12 +6,14 @@ import styled from "styled-components";
 import Header from "./Header";
 import { formatRelative } from "date-fns";
 import SingleFountain from "./SingleFountain";
+import GlobalStyles from "./GlobalStyles";
 
 function App() {
   return (
     <Wrapper>
       <Router>
         <Header />
+        <GlobalStyles />
         <Switch>
           <Route exact path="/">
             <Map />

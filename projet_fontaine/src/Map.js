@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import mapStyles from "./mapStyles";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setCenter,
+  setFountainData,
+  setSelected,
+} from "./redux/actions/viewActions";
 
 import {
   GoogleMap,
@@ -9,12 +15,15 @@ import {
 } from "@react-google-maps/api";
 
 const Map = () => {
-  const [fountains, setFountains] = useState([]);
+  const { center, fountainData, selected } = useSelector(
+    (state) => state.viewState
+  );
+  const dispatch = useDispatch();
 
   const handleFetch = async () => {
     const data = await fetch("/all");
     const parsed = await data.json();
-    setFountains(parsed.data);
+    dispatch(setFountainData(parsed.data));
   };
 
   useEffect(() => {
@@ -26,17 +35,13 @@ const Map = () => {
     width: "100vw",
     height: "100vh",
   };
-  const center = {
-    lat: 45.534811216839316,
-    lng: -73.61851604929831,
-  };
+
   const options = {
     styles: mapStyles,
     disableDefaultUI: true,
     zoomControl: true,
   };
-  const [selected, setSelected] = useState(null);
-
+  
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
@@ -60,7 +65,7 @@ const Map = () => {
       center={center}
       options={options}
     >
-      {fountains.map((marker) => (
+      {fountainData.map((marker) => (
         <Marker
           key={marker._id}
           position={{ lat: +marker.Latitude, lng: +marker.Longitude }}
@@ -71,7 +76,7 @@ const Map = () => {
             anchor: new window.google.maps.Point(17.7, 54.2),
           }}
           onClick={() => {
-            setSelected(marker);
+            dispatch(setSelected(marker));
           }}
         />
       ))}
@@ -80,7 +85,7 @@ const Map = () => {
         <InfoWindow
           position={{ lat: +selected.Latitude, lng: +selected.Longitude }}
           onCloseClick={() => {
-            setSelected(null);
+            dispatch(setSelected(null));
           }}
         >
           <div>
