@@ -19,7 +19,7 @@ const Header = () => {
   return (
     <>
       <Wrapper>
-        <div>Hi</div>
+        <h1>Eau-bot</h1>
         <MenuButton
           onClick={() => {
             dispatch(toggleDropDown(dropDown));

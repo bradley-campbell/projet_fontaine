@@ -1,4 +1,4 @@
-export default [
+const mapStyles = [
   {
     stylers: [
       {
@@ -61,6 +61,16 @@ export default [
   },
   {},
 ];
+
+export const options = {
+  backgroundColor: "#96bff6",
+  styles: mapStyles,
+  disableDefaultUI: true,
+  zoomControl: true,
+  minZoom: 11,
+  maxZoom: 20,
+  noClear: true,
+};
 
 export const boroughs = {
   1: { borough: "Saint-Léonard", lat: 45.5875, lng: -73.597, id: 1 },

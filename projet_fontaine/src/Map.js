@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import mapStyles from "./mapStyles";
+import mapStyles, { options } from "./mapStyles";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setCenter,
@@ -13,35 +13,17 @@ import {
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
+import Info from "./Info";
 
 const Map = () => {
   const { center, fountainData, selected } = useSelector(
     (state) => state.viewState
   );
+
   const dispatch = useDispatch();
 
-  const handleFetch = async () => {
-    const data = await fetch("/all");
-    const parsed = await data.json();
-    dispatch(setFountainData(parsed.data));
-  };
-
-  useEffect(() => {
-    handleFetch();
-  }, []);
-
   const libraries = ["places"];
-  const mapContainerStyle = {
-    width: "100vw",
-    height: "100vh",
-  };
 
-  const options = {
-    styles: mapStyles,
-    disableDefaultUI: true,
-    zoomControl: true,
-  };
-  
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
@@ -60,10 +42,13 @@ const Map = () => {
 
   return (
     <GoogleMap
-      zoom={14}
-      mapContainerStyle={mapContainerStyle}
+      mapContainerStyle={{
+        width: "100vw",
+        height: "100vh",
+      }}
       center={center}
       options={options}
+      zoom={11}
     >
       {fountainData.map((marker) => (
         <Marker
@@ -81,22 +66,7 @@ const Map = () => {
         />
       ))}
 
-      {selected ? (
-        <InfoWindow
-          position={{ lat: +selected.Latitude, lng: +selected.Longitude }}
-          onCloseClick={() => {
-            dispatch(setSelected(null));
-          }}
-        >
-          <div>
-            <h2>{selected.Arrondissement}</h2>
-            <p>{selected.Nom_parc_lieu}</p>
-            <p>{selected.Proximité_jeux_repère}</p>
-            <p>Intersection: {selected.Intersection}</p>
-            <p>{selected._id}</p>
-          </div>
-        </InfoWindow>
-      ) : null}
+      {selected ? <Info /> : null}
     </GoogleMap>
   );
 };

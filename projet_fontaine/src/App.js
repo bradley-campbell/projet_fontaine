@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState } from "react";
+import React, { useRef, useCallback, useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "normalize.css";
 import Map from "./Map";
@@ -7,8 +7,22 @@ import Header from "./Header";
 import { formatRelative } from "date-fns";
 import SingleFountain from "./SingleFountain";
 import GlobalStyles from "./GlobalStyles";
+import { useDispatch } from "react-redux";
+import { setFountainData } from "./redux/actions/viewActions";
 
 function App() {
+  const dispatch = useDispatch();
+
+  const handleFetch = async () => {
+    const data = await fetch("/all");
+    const parsed = await data.json();
+    dispatch(setFountainData(parsed.data));
+  };
+
+  useEffect(() => {
+    handleFetch();
+  }, []);
+
   return (
     <Wrapper>
       <Router>
