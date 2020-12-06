@@ -16,6 +16,7 @@ function App() {
   const handleFetch = async () => {
     const data = await fetch("/all");
     const parsed = await data.json();
+    console.log(parsed);
     dispatch(setFountainData(parsed.data));
   };
 

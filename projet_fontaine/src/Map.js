@@ -48,7 +48,7 @@ const Map = () => {
       }}
       center={center}
       options={options}
-      zoom={11}
+      zoom={15}
     >
       {fountainData.map((marker) => (
         <Marker

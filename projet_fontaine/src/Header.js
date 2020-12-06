@@ -4,7 +4,7 @@ import { GiBonsaiTree, GiHamburgerMenu } from "react-icons/gi";
 import { setSelected, toggleDropDown } from "./redux/actions/viewActions";
 import { useSelector, useDispatch } from "react-redux";
 import { boroughs } from "./mapStyles";
-import { setCenter } from "./redux/actions/viewActions";
+import { setCenter, setFountainData } from "./redux/actions/viewActions";
 
 const Header = () => {
   const { dropDown, language } = useSelector((state) => state.viewState);
@@ -12,8 +12,16 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const handleChange = async (e) => {
+    dispatch(toggleDropDown(dropDown))
     const { lat, lng } = boroughs[e.target.value];
     dispatch(setCenter({ lat, lng }));
+    // set zoom
+
+    const boroughFountains = await fetch(
+      `/fountains/${boroughs[e.target.value].borough}`
+    );
+    const parsed = await boroughFountains.json();
+    dispatch(setFountainData(parsed.data));
   };
 
   return (
@@ -29,7 +37,7 @@ const Header = () => {
         </MenuButton>
         <DropDownMenu view={dropDown}>
           <label for="boroughs">Choose a borough</label>
-          <select name="boroughs" onChange={handleChange}>
+          <select name="boroughs" onChange={handleChange} autofocus>
             {Object.values(boroughs).map((item) => {
               return <option value={item.id}>{item.borough}</option>;
             })}

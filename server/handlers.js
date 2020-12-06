@@ -15,11 +15,8 @@ const getAllEntries = async (req, res) => {
 
   const db = client.db("projet_fontaine");
   const fountains = await db.collection("fountains").find().toArray();
-  const fountainResponse = {};
 
-  fountains.forEach((fountain) => (fountainResponse[fountain._id] = fountain));
-
-  fountainResponse.length === 0
+  fountains.length === 0
     ? res.status(404).json({ status: 400, error: "No data was found" })
     : res.status(200).json({ status: 200, data: fountains });
 
@@ -38,9 +35,30 @@ const getEntryById = async (req, res) => {
   } catch (err) {
     status(500).json({ status: 500, error: "An unknown error has occured" });
   }
+
+  client.close();
 };
 
-const getEntriesByBorough = (req, res) => {};
+const getEntriesByBorough = async (req, res) => {
+  const { borough } = req.params;
+
+  const client = await MongoClient(MONGO_URI, options);
+  await client.connect();
+  const db = client.db("projet_fontaine");
+
+  const fountains = await db.collection("fountains").find().toArray();
+
+  fountains.length === 0
+    ? res
+        .status(400)
+        .json({ status: 400, error: "An unknown error has occured" })
+    : res.status(200).json({
+        status: 200,
+        data: fountains.filter((item) => item.Arrondissement === borough),
+      });
+
+  client.close();
+};
 
 module.exports = { getEntryById, getAllEntries, getEntriesByBorough };
 

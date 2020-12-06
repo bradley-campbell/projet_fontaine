@@ -18,7 +18,7 @@ app.get("/all", getAllEntries);
 
 app.get("/fountain/:_id", getEntryById);
 
-app.get("/fountains/borough", getEntriesByBorough);
+app.get("/fountains/:borough", getEntriesByBorough);
 
 const server = app.listen(PORT, () => {
   console.info("🌍 Listening on port " + server.address().port);
