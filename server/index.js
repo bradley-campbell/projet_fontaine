@@ -6,6 +6,7 @@ const {
   getEntryById,
   getEntriesByBorough,
   updateFountainState,
+  postTweet
 } = require("./handlers");
 
 const PORT = 3333;
@@ -22,6 +23,8 @@ app.get("/fountain/:_id", getEntryById);
 app.get("/fountains/:borough", getEntriesByBorough);
 
 app.patch("/fountain/:_id", updateFountainState);
+
+app.post("/posttweet", postTweet);
 
 const server = app.listen(PORT, () => {
   console.info("🌍 Listening on port " + server.address().port);

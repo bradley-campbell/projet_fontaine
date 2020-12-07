@@ -1,13 +1,28 @@
 "use strict";
 const { MongoClient } = require("mongodb");
 require("dotenv").config();
-const { MONGO_URI } = process.env;
+const {
+  MONGO_URI,
+  TWITTER_API_KEY,
+  TWITTER_API_SECRET_KEY,
+  TWITTER_ACCESS_TOKEN,
+  TWITTER_ACCESS_TOKEN_SECRET,
+} = process.env;
 const assert = require("assert");
+var Twit = require("twit");
 
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
+
+var T = new Twit({
+  consumer_key: TWITTER_API_KEY,
+  consumer_secret: TWITTER_API_SECRET_KEY,
+  access_token: TWITTER_ACCESS_TOKEN,
+  access_token_secret: TWITTER_ACCESS_TOKEN_SECRET,
+  timeout_ms: 60 * 1000,
+});
 
 const getAllEntries = async (req, res) => {
   const client = await MongoClient(MONGO_URI, options);
@@ -60,48 +75,46 @@ const getEntriesByBorough = async (req, res) => {
   client.close();
 };
 
-const updateFountainState = async (req, res) => {};
+const updateFountainState = async (req, res) => {
+  const client = await MongoClient(MONGO_URI, options);
+  await client.connect();
+  const db = client.db("projet_fontaine");
+
+  const { _id } = req.params;
+  const query = { _id };
+  const newValue = {
+    $set: { état: "inconnu" },
+  };
+
+  try {
+    const result = await db.collection("fountains").updateOne(query, newValue);
+    assert.equal(1, result.matchedCount);
+    assert.equal(1, result.modifiedCount);
+    res.status(200).json({ status: 200, _id });
+  } catch (err) {
+    console.log(err.stack);
+    res
+      .status(500)
+      .json({ status: 500, data: req.query, message: err.message });
+  }
+
+  client.close();
+};
+
+const postTweet = async (req, res) => {
+  T.post(
+    "statuses/update",
+    { status: "Bonjour @bradley__js", lat: 45.59201175, long: -73.5894623 },
+    function (err, data, response) {
+      console.log(data);
+    }
+  );
+};
 
 module.exports = {
   getEntryById,
   getAllEntries,
   getEntriesByBorough,
   updateFountainState,
+  postTweet,
 };
-
-// const bookSeat = async (req, res) => {
-//   const client = await MongoClient(MONGO_URI, options);
-//   await client.connect();
-//   const db = client.db("booking_app");
-
-//   const { _id, fullName, email, creditcard, expiration } = req.body;
-
-//   const query = { _id };
-//   const newValue = {
-//     $set: { isBooked: true, fullName, creditcard, expiration, email },
-//   };
-
-//   const seat = await db.collection("seats").findOne({ _id });
-//   console.log(seat);
-
-//   if (!seat.isBooked) {
-//     try {
-//       const result = await db.collection("seats").updateOne(query, newValue);
-//       assert.equal(1, result.matchedCount);
-//       assert.equal(1, result.modifiedCount);
-//       res.status(200).json({ status: 200, _id });
-//     } catch (err) {
-//       console.log(err.stack);
-//       res
-//         .status(500)
-//         .json({ status: 500, data: req.body, message: err.message });
-//     }
-//   } else {
-//     res
-//       .status(400)
-//       .json({ status: 400, data: req.body, message: "Seat is aready booked" });
-//   }
-//   client.close();
-// };
-
-// module.exports = { getSeats, bookSeat };

@@ -52,7 +52,7 @@ const Header = () => {
               ? "Choissisez une arrondissement"
               : "Choose a borough"}
           </label>
-          <select name="boroughs" onChange={handleChange} autoFocus>
+          <select name="boroughs" onChange={handleChange} autoFocus={true}>
             {Object.values(boroughs).map((item) => {
               return <option value={item.id}>{item.borough}</option>;
             })}
