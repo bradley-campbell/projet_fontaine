@@ -54,13 +54,20 @@ const getEntriesByBorough = async (req, res) => {
         .json({ status: 400, error: "An unknown error has occured" })
     : res.status(200).json({
         status: 200,
-        data: fountains.filter((item) => item.Arrondissement === borough),
+        data: fountains.filter((item) => item.arrondissement === borough),
       });
 
   client.close();
 };
 
-module.exports = { getEntryById, getAllEntries, getEntriesByBorough };
+const updateFountainState = async (req, res) => {};
+
+module.exports = {
+  getEntryById,
+  getAllEntries,
+  getEntriesByBorough,
+  updateFountainState,
+};
 
 // const bookSeat = async (req, res) => {
 //   const client = await MongoClient(MONGO_URI, options);

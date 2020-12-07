@@ -22,7 +22,7 @@ const SingleFountain = () => {
   return (
     <Wrapper>
       <img
-        src={`https://maps.googleapis.com/maps/api/staticmap?center=${+fountain.Latitude},${+fountain.Longitude}&size=300x300&format=jpeg&language=french&markers=icon:/projet_fontaine/public/fountainpin.svg|${+fountain.Latitude},${+fountain.Longitude}&zoom=17&key=${
+        src={`https://maps.googleapis.com/maps/api/staticmap?center=${+fountain.lat},${+fountain.lng}&size=300x300&format=jpeg&language=french&markers=icon:/projet_fontaine/public/fountainpin.svg|${+fountain.lat},${+fountain.lng}&zoom=17&key=${
           process.env.REACT_APP_GOOGLE_MAPS_API_KEY
         }&map_id=12483901aee2b3ef`}
       />

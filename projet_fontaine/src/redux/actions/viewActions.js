@@ -17,3 +17,8 @@ export const setSelected = (selected) => ({
   type: "SET_SELECTED",
   selected,
 });
+
+export const setLanguage = (language) => ({
+  type: "SET_LANGUAGE",
+  language,
+});

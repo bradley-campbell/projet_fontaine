@@ -24,6 +24,9 @@ const viewReducer = (state = intitialState, action) => {
     case "SET_SELECTED": {
       return { ...state, selected: action.selected };
     }
+    case "SET_LANGUAGE": {
+      return { ...state, language: action.language };
+    }
     default:
       return state;
   }

@@ -53,7 +53,7 @@ const Map = () => {
       {fountainData.map((marker) => (
         <Marker
           key={marker._id}
-          position={{ lat: +marker.Latitude, lng: +marker.Longitude }}
+          position={{ lat: +marker.lat, lng: +marker.lng }}
           icon={{
             url: "/fountainpin.svg",
             scaledSize: new window.google.maps.Size(35.4, 54.2),

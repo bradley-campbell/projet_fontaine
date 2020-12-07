@@ -5,21 +5,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSelected } from "./redux/actions/viewActions";
 
 const Info = () => {
-  const { selected } = useSelector((state) => state.viewState);
+  const { selected, language } = useSelector((state) => state.viewState);
   const dispatch = useDispatch();
-  
+
   return (
     <InfoWindow
-      position={{ lat: +selected.Latitude, lng: +selected.Longitude }}
+      position={{ lat: +selected.lat, lng: +selected.lng }}
       onCloseClick={() => {
         dispatch(setSelected(null));
       }}
     >
       <div>
-        <h2>{selected.Arrondissement}</h2>
-        <p>{selected.Nom_parc_lieu}</p>
-        <p>{selected.Proximité_jeux_repère}</p>
-        <p>Intersection: {selected.Intersection}</p>
+        <h2>
+          {language === "français" ? "Arrondissement: " : "Borough: "}
+          {selected.arrondissement}
+        </h2>
+        <p>{selected.nom_parc_lieu}</p>
+        <p>{selected.proximité}</p>
+        <p>Intersection: {selected.intersection}</p>
         <p>{selected._id}</p>
       </div>
     </InfoWindow>

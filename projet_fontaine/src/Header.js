@@ -4,7 +4,11 @@ import { GiBonsaiTree, GiHamburgerMenu } from "react-icons/gi";
 import { setSelected, toggleDropDown } from "./redux/actions/viewActions";
 import { useSelector, useDispatch } from "react-redux";
 import { boroughs } from "./mapStyles";
-import { setCenter, setFountainData } from "./redux/actions/viewActions";
+import {
+  setCenter,
+  setFountainData,
+  setLanguage,
+} from "./redux/actions/viewActions";
 
 const Header = () => {
   const { dropDown, language } = useSelector((state) => state.viewState);
@@ -12,7 +16,7 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const handleChange = async (e) => {
-    dispatch(toggleDropDown(dropDown))
+    dispatch(toggleDropDown(dropDown));
     const { lat, lng } = boroughs[e.target.value];
     dispatch(setCenter({ lat, lng }));
     // set zoom
@@ -21,13 +25,20 @@ const Header = () => {
       `/fountains/${boroughs[e.target.value].borough}`
     );
     const parsed = await boroughFountains.json();
+    console.log(parsed);
     dispatch(setFountainData(parsed.data));
+  };
+
+  const toggleLanguage = () => {
+    const updatedLanguage = language === "français" ? "english" : "français";
+    dispatch(setLanguage(updatedLanguage));
   };
 
   return (
     <>
       <Wrapper>
         <h1>Eau-bot</h1>
+        <button onClick={toggleLanguage}>FR/EN</button>
         <MenuButton
           onClick={() => {
             dispatch(toggleDropDown(dropDown));
@@ -36,8 +47,12 @@ const Header = () => {
           <GiHamburgerMenu size={35} color={"white"} />
         </MenuButton>
         <DropDownMenu view={dropDown}>
-          <label for="boroughs">Choose a borough</label>
-          <select name="boroughs" onChange={handleChange} autofocus>
+          <label for="boroughs">
+            {language === "français"
+              ? "Choissisez une arrondissement"
+              : "Choose a borough"}
+          </label>
+          <select name="boroughs" onChange={handleChange} autoFocus>
             {Object.values(boroughs).map((item) => {
               return <option value={item.id}>{item.borough}</option>;
             })}
