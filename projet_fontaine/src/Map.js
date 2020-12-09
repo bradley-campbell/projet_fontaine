@@ -16,18 +16,13 @@ import {
 import Info from "./Info";
 
 const Map = () => {
-  const { center, fountainData, selected } = useSelector(
+  const { center, fountainData, selected, zoom } = useSelector(
     (state) => state.viewState
   );
 
   const dispatch = useDispatch();
 
   const libraries = ["places"];
-
-  const mapRef = useRef();
-  const onMapLoad = useCallback((map) => {
-    mapRef.current = map;
-  }, []);
 
   const { isLoaded, loadError } = useLoadScript(
     {
@@ -44,18 +39,18 @@ const Map = () => {
     <GoogleMap
       mapContainerStyle={{
         width: "100vw",
-        height: "100vh",
+        height: "85vh",
       }}
       center={center}
       options={options}
-      zoom={15}
+      zoom={zoom}
     >
       {fountainData.map((marker) => (
         <Marker
           key={marker._id}
           position={{ lat: +marker.lat, lng: +marker.lng }}
           icon={{
-            url: "/fountainpin.svg",
+            url: "/droppinlight.svg",
             scaledSize: new window.google.maps.Size(35.4, 54.2),
             origin: new window.google.maps.Point(0, 0),
             anchor: new window.google.maps.Point(17.7, 54.2),
@@ -66,7 +61,7 @@ const Map = () => {
         />
       ))}
 
-      {selected ? <Info /> : null}
+      {/* {selected ? <Info /> : null} */}
     </GoogleMap>
   );
 };

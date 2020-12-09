@@ -8,6 +8,11 @@ export const setCenter = (center) => ({
   center,
 });
 
+export const setCurrentLocation = (currentLocation) => ({
+  type: "SET_CURRENT_LOCATION",
+  currentLocation,
+});
+
 export const setFountainData = (fountainData) => ({
   type: "SET_FOUNTAIN_DATA",
   fountainData,
@@ -21,4 +26,9 @@ export const setSelected = (selected) => ({
 export const setLanguage = (language) => ({
   type: "SET_LANGUAGE",
   language,
+});
+
+export const setZoom = (zoom) => ({
+  type: "SET_ZOOM",
+  zoom,
 });

@@ -3,10 +3,14 @@ import styled from "styled-components";
 import { InfoWindow } from "@react-google-maps/api";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelected } from "./redux/actions/viewActions";
+import { Link } from "react-router-dom";
+import { formatRelative } from "date-fns";
 
 const Info = () => {
   const { selected, language } = useSelector((state) => state.viewState);
   const dispatch = useDispatch();
+
+  
 
   return (
     <InfoWindow
@@ -24,6 +28,7 @@ const Info = () => {
         <p>{selected.proximité}</p>
         <p>Intersection: {selected.intersection}</p>
         <p>{selected._id}</p>
+        <Link to={`/fountain/${selected._id}`}>More info</Link>
       </div>
     </InfoWindow>
   );

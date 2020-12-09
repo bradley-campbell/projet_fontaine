@@ -1,14 +1,14 @@
-import React, { useRef, useCallback, useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import "normalize.css";
-import Map from "./Map";
+import React, { useEffect } from "react";
+import "normalize.css"; // CSS Reset
 import styled from "styled-components";
-import Header from "./Header";
-import { formatRelative } from "date-fns";
-import SingleFountain from "./SingleFountain";
-import GlobalStyles from "./GlobalStyles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setFountainData } from "./redux/actions/viewActions";
+import Map from "./Map";
+import Header from "./Header";
+import Modal from "./InfoModal/InfoModal";
+import Footer from "./Footer";
+import GlobalStyles from "./GlobalStyles";
+// import { BrowserRouter as Router, Switch, Route } from "react-router-dom"; May need this to create landing page
 
 function App() {
   const dispatch = useDispatch();
@@ -16,7 +16,6 @@ function App() {
   const handleFetch = async () => {
     const data = await fetch("/all");
     const parsed = await data.json();
-    console.log(parsed);
     dispatch(setFountainData(parsed.data));
   };
 
@@ -26,20 +25,14 @@ function App() {
 
   return (
     <Wrapper>
-      <Router>
-        <Header />
-        <GlobalStyles />
-        <Switch>
-          <Route exact path="/">
-            <Map />
-          </Route>
-          <Route exact path="/fountain/:id">
-            <SingleFountain />
-          </Route>
-        </Switch>
-      </Router>
+      <Header />
+      <GlobalStyles />
+      <Map />
+      <Modal />
+      <Footer />
     </Wrapper>
   );
+  // Add landing page route /home ?
 }
 
 export default App;

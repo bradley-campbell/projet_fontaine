@@ -4204,7 +4204,7 @@
   {
     "_id": "347",
     "arrondissement": "Rosemont-La Petite-Patrie",
-    "nom_parc_lieu": "Guglielmo-Marconi (Jean-Talon/Saint-Laurent)",
+    "nom_parc_lieu": "Guglielmo-Marconi",
     "intersection": "boul Saint-Laurent/rue Jean-Talon Est",
     "état": "inconnu",
     "precision_localisation": "orthophotographies",
