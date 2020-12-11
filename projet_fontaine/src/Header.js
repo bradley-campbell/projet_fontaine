@@ -25,7 +25,6 @@ const Header = () => {
   const { dropDown } = useSelector((state) => state.viewState);
 
   const setLocation = () => {
-    console.log("location");
     navigator.geolocation.getCurrentPosition((position) => {
       dispatch(setZoom(16));
       dispatch(

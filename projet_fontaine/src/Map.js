@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import mapStyles, { options } from "./mapStyles";
+import React from "react";
+import { options } from "./mapStyles";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelected } from "./redux/actions/viewActions";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 
 const Map = () => {
-  const { center, fountainData, selected, zoom, currentLocation } = useSelector(
+  const { center, fountainData, zoom, currentLocation } = useSelector(
     (state) => state.viewState
   );
 

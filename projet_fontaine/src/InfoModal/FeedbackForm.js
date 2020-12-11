@@ -88,7 +88,7 @@ const FeedbackForm = () => {
             className={classes.selectEmpty}
           >
             <MenuItem value="">
-              <em>TODO</em>
+              <em></em>
             </MenuItem>
             {Object.values(condition).map((item) => {
               return (
