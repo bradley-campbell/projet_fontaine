@@ -2,7 +2,7 @@
   "name": "projet_fontaine",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3333",
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",

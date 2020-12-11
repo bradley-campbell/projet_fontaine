@@ -15,7 +15,7 @@ setInterval(() => {
   autoRetweet();
 }, 10800000);
 
-const PORT = 3333;
+const PORT = process.env.PORT || 5000;
 
 let app = express();
 
