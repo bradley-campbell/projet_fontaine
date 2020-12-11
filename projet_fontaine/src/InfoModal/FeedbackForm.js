@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { useSelector } from "react-redux";
-import { condition } from "../mapStyles";
+import { condition, boroughs } from "../mapStyles";
+import { distance } from "../utils";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 200,
+    minWidth: 250,
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -21,7 +21,9 @@ const useStyles = makeStyles((theme) => ({
 
 const FeedbackForm = () => {
   const classes = useStyles();
-  const { language } = useSelector((state) => state.viewState);
+  const { language, selected, currentLocation } = useSelector(
+    (state) => state.viewState
+  );
   const [feedback, setFeedback] = useState("");
 
   const handleChange = (event) => {
@@ -30,9 +32,43 @@ const FeedbackForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(feedback);
-    // FETCH post - update DB + send tweet
+
+    let boroughInfo;
+
+    Object.values(boroughs).forEach((item) => {
+      if (item.borough === selected.arrondissement) {
+        boroughInfo = boroughs[item.id];
+      }
+    });
+
+    const reqObj = {
+      method: "POST",
+      body: JSON.stringify({
+        feedback: feedback,
+        fountainData: selected,
+        boroughInfo: boroughInfo,
+      }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+
+    const result = await fetch("/posttweet", reqObj);
+    const parsed = await result.json();
+    console.log(parsed);
   };
+
+  let distanceFrom = null;
+
+  if (currentLocation) {
+    distanceFrom = distance(
+      currentLocation.lat,
+      currentLocation.lng,
+      selected.lat,
+      selected.lng
+    ).toFixed(3);
+  }
 
   return (
     <Wrapper>
@@ -57,13 +93,18 @@ const FeedbackForm = () => {
             {Object.values(condition).map((item) => {
               return (
                 <MenuItem key={item.id} value={item.FR}>
-                  {language === "français" ? item.FR : item.EN}{" "}
-                  {item.rating}
+                  {language === "français" ? item.FR : item.EN} {item.rating}
                 </MenuItem>
               );
             })}
           </Select>
-          <button type="submit">Submit</button>
+          <button
+            type="submit"
+            disabled={distanceFrom > 1 || !feedback || !currentLocation}
+          >
+            {distanceFrom > 1 ? "Too Far" : "Submit"}
+          </button>
+          {distanceFrom > 1 && <div>Too far away</div>}
         </FormControl>
       </form>
     </Wrapper>

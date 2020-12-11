@@ -10,6 +10,7 @@ const {
 } = process.env;
 const assert = require("assert");
 var Twit = require("twit");
+const { json, response } = require("express");
 
 const options = {
   useNewUrlParser: true,
@@ -102,13 +103,24 @@ const updateFountainState = async (req, res) => {
 };
 
 const postTweet = async (req, res) => {
-  T.post(
-    "statuses/update",
-    { status: "Bonjour @bradley__js", lat: 45.59201175, long: -73.5894623 },
-    function (err, data, response) {
-      console.log(data);
-    }
-  );
+  const {
+    feedback,
+    fountainData: { _id, arrondissement, nom_parc_lieu, lat, lng },
+    boroughInfo: { twitterHandle },
+  } = req.body;
+
+  console.log(req.body);
+  // T.post(
+  //   "statuses/update",
+  //   {
+  //     status: `Un.e utilisateur.trice a donné son avis sur la fontaine à boire no. ${_id}, située au parc/lieu: ${nom_parc_lieu} à ${arrondissement}, jugeant qu'elle est en "${feedback}".`,
+  //     lat: lat,
+  //     long: lng,
+  //   },
+  //   function (err, data, response) {
+  //     res.status(200).json({ status: 200, response: response });
+  //   }
+  // );
 };
 
 module.exports = {

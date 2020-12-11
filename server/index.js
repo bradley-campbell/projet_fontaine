@@ -6,8 +6,14 @@ const {
   getEntryById,
   getEntriesByBorough,
   updateFountainState,
-  postTweet
+  postTweet,
 } = require("./handlers");
+
+const { autoRetweet } = require("./autoRetweet");
+
+setInterval(() => {
+  autoRetweet();
+}, 10800000);
 
 const PORT = 3333;
 
@@ -25,6 +31,8 @@ app.get("/fountains/:borough", getEntriesByBorough);
 app.patch("/fountain/:_id", updateFountainState);
 
 app.post("/posttweet", postTweet);
+
+// app.get("/tweetstream", retweetPosts);
 
 const server = app.listen(PORT, () => {
   console.info("🌍 Listening on port " + server.address().port);

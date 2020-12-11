@@ -1,22 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import mapStyles, { options } from "./mapStyles";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  setCenter,
-  setFountainData,
-  setSelected,
-} from "./redux/actions/viewActions";
-
-import {
-  GoogleMap,
-  useLoadScript,
-  Marker,
-  InfoWindow,
-} from "@react-google-maps/api";
-import Info from "./Info";
+import { setSelected } from "./redux/actions/viewActions";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 
 const Map = () => {
-  const { center, fountainData, selected, zoom } = useSelector(
+  const { center, fountainData, selected, zoom, currentLocation } = useSelector(
     (state) => state.viewState
   );
 
@@ -39,7 +28,7 @@ const Map = () => {
     <GoogleMap
       mapContainerStyle={{
         width: "100vw",
-        height: "85vh",
+        height: window.innerWidth > 768 ? "85vh" : "92.5vh",
       }}
       center={center}
       options={options}
@@ -60,6 +49,11 @@ const Map = () => {
           }}
         />
       ))}
+      {currentLocation && (
+        <Marker
+          position={{ lat: currentLocation.lat, lng: currentLocation.lng }}
+        />
+      )}
 
       {/* {selected ? <Info /> : null} */}
     </GoogleMap>

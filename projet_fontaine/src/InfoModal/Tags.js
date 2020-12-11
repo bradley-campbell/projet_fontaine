@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { distance } from "../utils";
+import ReactTooltip from "react-tooltip";
 
 const Tags = () => {
   const {
@@ -9,46 +10,78 @@ const Tags = () => {
     selected: { intersection, proximité, nom_parc_lieu, note, état, lat, lng },
   } = useSelector((state) => state.viewState);
 
+  const { language } = useSelector((state) => state.viewState);
+
+  let distanceFrom = null;
+
+  if (currentLocation) {
+    const dist = distance(
+      currentLocation.lat,
+      currentLocation.lng,
+      lat,
+      lng
+    ).toFixed(3);
+
+    dist > 1
+      ? (distanceFrom = `${dist} km`)
+      : (distanceFrom = `${dist * 1000} m`);
+  }
+
   return (
     <Wrapper>
-      <Tag style={{ backgroundColor: "#B4DC69" }}>
+      <Tag
+        style={{ backgroundColor: "#B4DC69" }}
+        data-tip={
+          language === "français"
+            ? "Nom du parc ou lieu"
+            : "Park or location name"
+        }
+      >
         <IconWrapper>
           <Icon src="/park.svg" alt="park location icon" />
         </IconWrapper>
         <span>{nom_parc_lieu}</span>
       </Tag>
       {proximité && (
-        <Tag style={{ backgroundColor: "orange" }}>
+        <Tag
+          style={{ backgroundColor: "orange" }}
+          data-tip={language === "français" ? "À proximité" : "Proximity to"}
+        >
           <IconWrapper>
             <Icon src="/proximity.svg" alt="map proximity icon" />
           </IconWrapper>
           <span>{proximité}</span>
         </Tag>
       )}
-      <Tag style={{ backgroundColor: "#96BFF6" }}>
+      {/* <Tag
+        style={{ backgroundColor: "#96BFF6" }}
+        data-tip={language === "français" ? "État" : "Condition"}
+      >
         <IconWrapper>
           <Icon src="/rating.svg" alt="5 stars rating icon" />
         </IconWrapper>
         <span>{état}</span>
-      </Tag>
+      </Tag> */}
       {currentLocation && (
-        <Tag style={{ backgroundColor: "orange" }}>
+        <Tag
+          style={{ backgroundColor: "orange" }}
+          data-tip={
+            language === "français"
+              ? "Distance approximative"
+              : "Approximate distance"
+          }
+        >
           <IconWrapper>
             <Icon src="/distance.svg" alt="distance between two points icon" />
           </IconWrapper>
-          <span>
-            {distance(
-              currentLocation.lat,
-              currentLocation.lng,
-              lat,
-              lng
-            ).toFixed(3)}{" "}
-            km
-          </span>
+          <span>{distanceFrom}</span>
         </Tag>
       )}
       {note && (
-        <Tag style={{ backgroundColor: "orange" }}>
+        <Tag
+          style={{ backgroundColor: "orange" }}
+          data-tip={language === "français" ? "Remarque" : "Note"}
+        >
           <IconWrapper>
             <Icon src="/note.svg" alt="note pad icon" />
           </IconWrapper>
@@ -56,13 +89,14 @@ const Tags = () => {
         </Tag>
       )}
       {intersection && (
-        <Tag style={{ backgroundColor: "yellow" }}>
+        <Tag style={{ backgroundColor: "yellow" }} data-tip="Intersection">
           <IconWrapper>
             <Icon src="/intersection.svg" alt="road intersection icon" />
           </IconWrapper>
           <span>{intersection}</span>
         </Tag>
       )}
+      <ReactTooltip />
     </Wrapper>
   );
 };
@@ -71,7 +105,7 @@ export default Tags;
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   height: 15vh;

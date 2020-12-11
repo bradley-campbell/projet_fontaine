@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import "normalize.css"; // CSS Reset
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { setFountainData } from "./redux/actions/viewActions";
+import { useDispatch } from "react-redux";
+import {
+  setCurrentLocation,
+  setFountainData,
+} from "./redux/actions/viewActions";
 import Map from "./Map";
 import Header from "./Header";
 import Modal from "./InfoModal/InfoModal";
@@ -20,6 +23,14 @@ function App() {
   };
 
   useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      dispatch(
+        setCurrentLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        })
+      );
+    });
     handleFetch();
   }, []);
 

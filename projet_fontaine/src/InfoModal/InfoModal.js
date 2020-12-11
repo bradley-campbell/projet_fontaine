@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import SingleFountain from "./SingleFountain"
+import SingleFountain from "./SingleFountain";
 import { Icon } from "react-icons-kit";
 import { compass } from "react-icons-kit/ikons/compass";
 import { map_delete } from "react-icons-kit/ikons/map_delete";
@@ -12,8 +12,6 @@ import LanguageToggle from "../LanguageToggle";
 const Payment = () => {
   const dispatch = useDispatch();
   const { selected } = useSelector((state) => state.viewState);
-
-  console.log(selected);
 
   const closeModal = () => {
     dispatch(setSelected(null));

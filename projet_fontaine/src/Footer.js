@@ -8,69 +8,15 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 250,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}));
+import { TwitterFollowButton } from "react-twitter-embed";
+import LanguageToggle from "./LanguageToggle";
+import BoroughSelect from "./BoroughSelect";
 
 const Footer = () => {
-  const classes = useStyles();
-  const { language } = useSelector((state) => state.viewState);
-  const dispatch = useDispatch();
-
-  const handleChange = async (e) => {
-    // dispatch(toggleDropDown(dropDown));
-    const { lat, lng } = boroughs[e.target.value];
-    dispatch(setCenter({ lat, lng }));
-
-    const boroughFountains = await fetch(
-      `/fountains/${boroughs[e.target.value].borough}`
-    );
-    const parsed = await boroughFountains.json();
-    console.log(parsed);
-    dispatch(setFountainData(parsed.data));
-  };
-
   return (
     <Wrapper>
-      <FormControl className={classes.formControl} onChange={handleChange}>
-        <InputLabel shrink id="placeholder share your feedback">
-          {language === "français"
-            ? "Choissisez une arrondissement"
-            : "Choose a borough"}
-        </InputLabel>
-        <Select
-          labelId="select feedback"
-          id="select feedback"
-          onChange={handleChange}
-          displayEmpty
-          className={classes.selectEmpty}
-        >
-          <MenuItem value="">
-            <em>TODO</em>
-          </MenuItem>
-          {Object.values(boroughs).map((item) => {
-            return (
-              <MenuItem key={item.id} value={item.id}>
-                {item.borough}
-              </MenuItem>
-            );
-          })}
-        </Select>
-      </FormControl>
-
-      {/* <select name="boroughs" onChange={handleChange} autoFocus={true}>
-        <option></option>
-        {Object.values(boroughs).map((item) => {
-          return <option value={item.id}>{item.borough}</option>;
-        })}
-      </select> */}
+      <BoroughSelect />
+      <TwitterFollowButton screenName={"eau_bot"} />
     </Wrapper>
   );
 };
@@ -80,6 +26,7 @@ export default Footer;
 const Wrapper = styled.div`
   box-sizing: border-box;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   position: absolute;
   bottom: 0;
@@ -87,9 +34,14 @@ const Wrapper = styled.div`
   width: 100vw;
   height: 15vh;
   padding: 15px;
-  border: 2px solid black;
+  background-color: #96bff6;
 
   @media only screen and (max-width: 768px) {
     justify-content: center;
+    height: 7.5vh;
+
+    .desktop {
+      display: none;
+    }
   }
 `;
