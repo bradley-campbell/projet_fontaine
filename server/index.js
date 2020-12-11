@@ -15,9 +15,12 @@ setInterval(() => {
   autoRetweet();
 }, 10800000);
 
-const PORT = process.env.PORT || 5000;
+const PORT = 3333;
 
 let app = express();
+
+var cors = require("cors");
+app.use(cors());
 
 app.use(express.json());
 app.use(morgan("dev"));
