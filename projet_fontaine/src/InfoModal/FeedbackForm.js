@@ -5,9 +5,13 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { condition, boroughs } from "../mapStyles";
 import { distance } from "../utils";
+import { AiFillWarning } from "react-icons/ai";
+import moment from "moment";
+import { handleSubmit } from "./handlers";
+import { setSelected } from "../redux/actions/viewActions";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -24,39 +28,11 @@ const FeedbackForm = () => {
   const { language, selected, currentLocation } = useSelector(
     (state) => state.viewState
   );
-  const [feedback, setFeedback] = useState("");
+  const [feedback, setFeedback] = useState({});
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
-    setFeedback(event.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    let boroughInfo;
-
-    Object.values(boroughs).forEach((item) => {
-      if (item.borough === selected.arrondissement) {
-        boroughInfo = boroughs[item.id];
-      }
-    });
-
-    const reqObj = {
-      method: "POST",
-      body: JSON.stringify({
-        feedback: feedback,
-        fountainData: selected,
-        boroughInfo: boroughInfo,
-      }),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-
-    const result = await fetch("/posttweet", reqObj);
-    const parsed = await result.json();
-    console.log(parsed);
+    setFeedback({ data: event.target.value, date: moment().format("D/MM/YY") });
   };
 
   let distanceFrom = null;
@@ -72,17 +48,23 @@ const FeedbackForm = () => {
 
   return (
     <Wrapper>
-      <form onSubmit={handleSubmit}>
+      <Form
+        onSubmit={(e) => {
+          handleSubmit(e, boroughs, selected, feedback);
+          dispatch(setSelected(null));
+        }}
+      >
         <FormControl className={classes.formControl}>
-          <InputLabel shrink id="placeholder share your feedback">
+          <InputLabel shrink id="feedbackLabel">
             {language === "français"
               ? "Donnez votre avis"
               : "Share your feedback"}
           </InputLabel>
+
           <Select
             labelId="select feedback"
             id="select feedback"
-            value={feedback}
+            value={feedback.data}
             onChange={handleChange}
             displayEmpty
             className={classes.selectEmpty}
@@ -92,21 +74,26 @@ const FeedbackForm = () => {
             </MenuItem>
             {Object.values(condition).map((item) => {
               return (
-                <MenuItem key={item.id} value={item.FR}>
+                <MenuItem key={item.id} value={item}>
                   {language === "français" ? item.FR : item.EN} {item.rating}
                 </MenuItem>
               );
             })}
           </Select>
-          <button
+          <FormSubmit
             type="submit"
             disabled={distanceFrom > 1 || !feedback || !currentLocation}
           >
-            {distanceFrom > 1 ? "Too Far" : "Submit"}
-          </button>
-          {distanceFrom > 1 && <div>Too far away</div>}
+            {language === "français" ? "Valider" : "Submit"}
+          </FormSubmit>
+          {distanceFrom > 1 && (
+            <Warning>
+              <AiFillWarning />{" "}
+              {language === "français" ? "Trop Loin" : "Too Far"}
+            </Warning>
+          )}
         </FormControl>
-      </form>
+      </Form>
     </Wrapper>
   );
 };
@@ -114,6 +101,37 @@ const FeedbackForm = () => {
 export default FeedbackForm;
 
 const Wrapper = styled.div`
+  margin-top: 15px;
   display: flex;
   align-items: center;
+`;
+
+const Warning = styled.div`
+  color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+`;
+
+const Form = styled.form`
+  @media only screen and (max-width: 768px) {
+    width: "80%";
+  }
+`;
+
+const FormSubmit = styled.button`
+  margin-top: 5px;
+  background-color: #3f51b5;
+  color: white;
+  outline: none;
+  cursor: pointer;
+  padding: 2.5px;
+  border-radius: 5px;
+  border: none;
+
+  :active,
+  :disabled {
+    background-color: #e0e0e0;
+  }
 `;

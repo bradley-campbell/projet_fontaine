@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
-import { setCenter, setLanguage } from "./redux/actions/viewActions";
+import { setLanguage } from "./redux/actions/viewActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {

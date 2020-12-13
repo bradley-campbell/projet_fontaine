@@ -41,27 +41,3 @@ const viewReducer = (state = intitialState, action) => {
 
 export default viewReducer;
 
-// const libraries = ["places"];
-// const mapContainerStyle = {
-//   width: "100vw",
-//   height: "100vh",
-// };
-
-// const options = {
-//   styles: mapStyles,
-//   disableDefaultUI: true,
-//   zoomControl: true,
-// };
-
-// const mapRef = useRef();
-// const onMapLoad = useCallback((map) => {
-//   mapRef.current = map;
-// }, []);
-
-// const { isLoaded, loadError } = useLoadScript(
-//   {
-//     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-//     libraries,
-//   },
-//   []
-// );

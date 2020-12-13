@@ -98,7 +98,7 @@ export const options = {
   minZoom: 11,
   maxZoom: 20,
   noClear: true,
-  gestureHandling: "cooperative",
+  // gestureHandling: "cooperative",
 };
 
 export const boroughs = {

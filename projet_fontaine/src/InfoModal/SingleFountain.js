@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
-import { condition, options } from "../mapStyles";
-import { useDispatch, useSelector } from "react-redux";
+import { options } from "../mapStyles";
+import { useSelector } from "react-redux";
 import Tags from "./Tags";
 import FeedbackForm from "./FeedbackForm";
-
+import { Icon, IconWrapper, Tag } from "../GlobalStyles";
 
 import {
   GoogleMap,
@@ -13,26 +12,11 @@ import {
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
-import { setFountainData, setSelected } from "../redux/actions/viewActions";
 
 const SingleFountain = () => {
-  const [fountain, setFountain] = useState({});
-  const id = 12;
-  const dispatch = useDispatch();
-
   const { language, selected } = useSelector((state) => state.viewState);
 
   const libraries = ["places"];
-
-  const handleFetch = async () => {
-    const data = await fetch(`/fountain/${id}`);
-    let response = await data.json();
-    setFountain(response.data);
-  };
-
-  useEffect(() => {
-    setFountain(selected);
-  }, []);
 
   const { isLoaded, loadError } = useLoadScript(
     {
@@ -49,17 +33,14 @@ const SingleFountain = () => {
     <div>loading</div>
   ) : (
     <Wrapper>
-      <h3 style={{ color: "grey" }}>
-        {language === "français" ? "Arrondissement:" : "Borough:"}
-        {selected.arrondissement}
-      </h3>
-      <FeedbackForm />
-
+      <h1>{selected.arrondissement}</h1>
+      <Tags />
       <Map>
         <GoogleMap
           mapContainerStyle={{
             width: "100%",
             height: "30vh",
+            zoomControl: false,
           }}
           center={{ lat: +selected.lat, lng: +selected.lng }}
           options={options}
@@ -76,7 +57,38 @@ const SingleFountain = () => {
           />
         </GoogleMap>
       </Map>
-      <Tags />
+      <Ratings>
+        {!selected.état ? (
+          <Tag
+            style={{ backgroundColor: "#96BFF6" }}
+            data-tip={language === "français" ? "État" : "Condition"}
+          >
+            <IconWrapper>
+              <Icon src="/rating.svg" alt="rating icon" />
+            </IconWrapper>
+            <span>
+              {language === "français"
+                ? "Pas d'avis, encore"
+                : "No Ratings yet"}
+            </span>
+          </Tag>
+        ) : (
+          selected.état.map((item) => {
+            return (
+              <Tag
+                style={{ backgroundColor: "#96BFF6" }}
+                data-tip={language === "français" ? "État" : "Condition"}
+              >
+                <IconWrapper>
+                  <Icon src="/rating.svg" alt="rating icon" />
+                </IconWrapper>
+                <span>{item}</span>
+              </Tag>
+            );
+          })
+        )}
+      </Ratings>
+      <FeedbackForm />
     </Wrapper>
   );
 };
@@ -84,7 +96,7 @@ const SingleFountain = () => {
 export default SingleFountain;
 
 const Wrapper = styled.div`
-  margin-top: 5%;
+  padding: 20px 0 20px 0;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -110,6 +122,14 @@ const Info = styled.div`
   width: 100%;
   justify-content: flex-start;
   padding-left: 25px;
+`;
+
+const Ratings = styled.div`
+  overflow: scroll;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
 // https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap

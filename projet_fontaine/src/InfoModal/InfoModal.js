@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import SingleFountain from "./SingleFountain";
-import { Icon } from "react-icons-kit";
-import { compass } from "react-icons-kit/ikons/compass";
-import { map_delete } from "react-icons-kit/ikons/map_delete";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelected } from "../redux/actions/viewActions";
 import LanguageToggle from "../LanguageToggle";
+import { Overlay } from "../GlobalStyles";
 
 const Payment = () => {
   const dispatch = useDispatch();
@@ -23,7 +21,7 @@ const Payment = () => {
         <Content>
           <Buttons>
             <ExitButton onClick={closeModal}>
-              <Icon icon={map_delete} size={30} />
+              <AiOutlineCloseCircle size={30} />
             </ExitButton>
             <LanguageToggle />
           </Buttons>
@@ -40,30 +38,12 @@ const Wrapper = styled.div`
   visibility: ${(props) => (props.visible ? "visible" : "hidden")};
 `;
 
-const Overlay = styled.div`
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: auto;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-`;
-
 const Content = styled.div`
   background-color: white;
   border-radius: 15px;
-  padding: 15px;
   width: 50%;
   min-height: 450px;
   box-shadow: 10px 10px 10px 3px rgba(0,0,0,0.50);
-
 
   @media only screen and (max-width: 768px){
    
@@ -76,16 +56,26 @@ const Content = styled.div`
 `;
 
 const ExitButton = styled.button`
-  border: 0;
+  border: none;
   border-radius: 50%;
   background-color: transparent;
   position: relative;
   top: 0;
   left: 0;
   cursor: pointer;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+
+  :active {
+    background-color: #578cad;
+  }
 `;
 
 const Buttons = styled.div`
+  padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -25,8 +25,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const BoroughSelect = () => {
+
   const classes = useStyles();
-  const { language, dropDown } = useSelector((state) => state.viewState);
+  const { language } = useSelector((state) => state.viewState);
   const dispatch = useDispatch();
 
   const handleChange = async (e) => {
@@ -34,7 +35,6 @@ const BoroughSelect = () => {
       const allResults = await fetch(`/all`);
       const parsed = await allResults.json();
       dispatch(setFountainData(parsed.data));
-      // window.innerWidth > 768 && dispatch(toggleDropDown(dropDown));
       return;
     }
 
@@ -46,7 +46,6 @@ const BoroughSelect = () => {
     );
     const parsed = await boroughFountains.json();
     dispatch(setFountainData(parsed.data));
-    // window.innerWidth > 768 && dispatch(toggleDropDown(dropDown));
     dispatch(setZoom(13));
   };
 

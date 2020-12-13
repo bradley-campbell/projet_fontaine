@@ -54,8 +54,7 @@ const Map = () => {
           position={{ lat: currentLocation.lat, lng: currentLocation.lng }}
         />
       )}
-
-      {/* {selected ? <Info /> : null} */}
+      
     </GoogleMap>
   );
 };

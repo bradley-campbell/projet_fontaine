@@ -11,7 +11,6 @@ import Header from "./Header";
 import Modal from "./InfoModal/InfoModal";
 import Footer from "./Footer";
 import GlobalStyles from "./GlobalStyles";
-// import { BrowserRouter as Router, Switch, Route } from "react-router-dom"; May need this to create landing page
 
 function App() {
   const dispatch = useDispatch();
@@ -43,7 +42,6 @@ function App() {
       <Footer />
     </Wrapper>
   );
-  // Add landing page route /home ?
 }
 
 export default App;

@@ -1,23 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { GiBonsaiTree, GiHamburgerMenu } from "react-icons/gi";
-import {
-  setSelected,
-  setZoom,
-  toggleDropDown,
-} from "./redux/actions/viewActions";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { setZoom, toggleDropDown } from "./redux/actions/viewActions";
 import { useSelector, useDispatch } from "react-redux";
-import { boroughs } from "./mapStyles";
-import {
-  setCenter,
-  setFountainData,
-  setCurrentLocation,
-} from "./redux/actions/viewActions";
-
-import LanguageToggle from "./LanguageToggle";
+import { setCenter, setCurrentLocation } from "./redux/actions/viewActions";
 import { Icon } from "react-icons-kit";
 import { compass } from "react-icons-kit/ikons/compass";
 import BoroughSelect from "./BoroughSelect";
+import LanguageToggle from "./LanguageToggle";
 
 const Header = () => {
   const dispatch = useDispatch();

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { distance } from "../utils";
 import ReactTooltip from "react-tooltip";
+import { Icon, IconWrapper, Tag } from "../GlobalStyles";
 
 const Tags = () => {
   const {
@@ -53,15 +54,6 @@ const Tags = () => {
           <span>{proximité}</span>
         </Tag>
       )}
-      {/* <Tag
-        style={{ backgroundColor: "#96BFF6" }}
-        data-tip={language === "français" ? "État" : "Condition"}
-      >
-        <IconWrapper>
-          <Icon src="/rating.svg" alt="5 stars rating icon" />
-        </IconWrapper>
-        <span>{état}</span>
-      </Tag> */}
       {currentLocation && (
         <Tag
           style={{ backgroundColor: "orange" }}
@@ -106,51 +98,6 @@ export default Tags;
 const Wrapper = styled.div`
   display: flex;
   justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  height: 15vh;
   overflow: scroll;
-  flex-wrap: wrap;
-`;
-
-const Tag = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  border-radius: 15px;
-
-  align-items: center;
-  min-width: 75px;
-  padding: 5px;
-  margin: 5px 10px 5px 10px;
-  box-shadow: 1.5px 1.5px 1.5px 1.5px rgba(0, 0, 0, 0.42);
-
-  @media only screen and (max-width: 768px) {
-    min-width: 50px;
-    padding: 2.5px;
-    margin: 5px 5px 5px 5px;
-  }
-`;
-
-const Icon = styled.img`
-  height: 20px;
-  width: auto;
-
-  @media only screen and (max-width: 768px) {
-    height: 15px;
-  }
-`;
-
-const IconWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.15);
-  padding: 8px;
-  border-radius: 50%;
-  margin: 0 10px 0 10px;
-
-  @media only screen and (max-width: 768px) {
-    padding: 5px;
-    margin: 0 5px 0 5px;
-  }
+  width: 100%;
 `;

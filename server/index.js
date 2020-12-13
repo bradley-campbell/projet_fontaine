@@ -35,8 +35,6 @@ app.patch("/fountain/:_id", updateFountainState);
 
 app.post("/posttweet", postTweet);
 
-// app.get("/tweetstream", retweetPosts);
-
 const server = app.listen(PORT, () => {
   console.info("🌍 Listening on port " + server.address().port);
 });

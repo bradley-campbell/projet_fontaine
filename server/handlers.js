@@ -81,10 +81,12 @@ const updateFountainState = async (req, res) => {
   await client.connect();
   const db = client.db("projet_fontaine");
 
+  const { data, date } = req.body;
+
   const { _id } = req.params;
   const query = { _id };
   const newValue = {
-    $set: { état: "inconnu" },
+    $push: { état: `${data.rating} - ${date}` },
   };
 
   try {
