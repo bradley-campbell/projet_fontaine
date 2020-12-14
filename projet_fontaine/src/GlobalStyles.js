@@ -95,5 +95,10 @@ export const Overlay = styled.div`
   z-index: 999;
 `;
 
-export default GlobalStyles;
+export const TagText = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
+export default GlobalStyles;

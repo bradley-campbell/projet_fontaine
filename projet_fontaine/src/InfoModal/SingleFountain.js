@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { options } from "../mapStyles";
 import { useSelector } from "react-redux";
 import Tags from "./Tags";
 import FeedbackForm from "./FeedbackForm";
-import { Icon, IconWrapper, Tag } from "../GlobalStyles";
+import { Icon, IconWrapper, Tag, TagText } from "../GlobalStyles";
 
-import {
-  GoogleMap,
-  useLoadScript,
-  Marker,
-  InfoWindow,
-} from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 
 const SingleFountain = () => {
   const { language, selected } = useSelector((state) => state.viewState);
@@ -82,7 +77,9 @@ const SingleFountain = () => {
                 <IconWrapper>
                   <Icon src="/rating.svg" alt="rating icon" />
                 </IconWrapper>
-                <span>{item}</span>
+                <TagText>
+                  <span>{item}</span>
+                </TagText>
               </Tag>
             );
           })
@@ -116,14 +113,6 @@ const Map = styled.div`
   margin: 10px 0 10px 0;
 `;
 
-const Form = styled.form``;
-
-const Info = styled.div`
-  width: 100%;
-  justify-content: flex-start;
-  padding-left: 25px;
-`;
-
 const Ratings = styled.div`
   overflow: scroll;
   width: 100%;
@@ -131,8 +120,3 @@ const Ratings = styled.div`
   justify-content: flex-start;
   align-items: center;
 `;
-
-// https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap
-// &markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318
-// &markers=color:red%7Clabel:C%7C40.718217,-73.998284
-// &key=YOUR_API_KEY

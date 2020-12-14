@@ -4,15 +4,14 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import styled from "styled-components";
-import { boroughs } from "./mapStyles";
+import { boroughs } from "../mapStyles";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCenter,
   setFountainData,
   setZoom,
-  toggleDropDown,
-} from "./redux/actions/viewActions";
+} from "../redux/actions/viewActions";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -25,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const BoroughSelect = () => {
-
   const classes = useStyles();
   const { language } = useSelector((state) => state.viewState);
   const dispatch = useDispatch();

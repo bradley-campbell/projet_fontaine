@@ -32,8 +32,8 @@ const autoRetweet = () => {
   const randomI = Math.floor(Math.random() * themes.length);
   let params = { q: `${themes[randomI]} since:2020-01-01` };
 
-  const retweet = (err, data, response) => {
-    console.log("retweet");
+  const retweet = (tweetId) => {
+    console.log("retweet", tweetId);
   };
 
   const gotData = (err, data, response) => {
@@ -42,8 +42,7 @@ const autoRetweet = () => {
     } else {
       const randomI = Math.floor(Math.random() * data.statuses.length);
       const tweetId = data.statuses[randomI].id_str;
-      console.log("tweetId", data.statuses[randomI].source_status_id);
-      T.post(`statuses/retweet/${tweetId}`, retweet);
+      T.post(`statuses/retweet/${tweetId}`, retweet(tweetId));
     }
   };
 

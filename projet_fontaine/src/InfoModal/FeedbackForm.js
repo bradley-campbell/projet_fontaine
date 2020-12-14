@@ -10,7 +10,7 @@ import { condition, boroughs } from "../mapStyles";
 import { distance } from "../utils";
 import { AiFillWarning } from "react-icons/ai";
 import moment from "moment";
-import { handleSubmit } from "./handlers";
+import { handleSubmit } from "./handleSubmit";
 import { setSelected } from "../redux/actions/viewActions";
 
 const useStyles = makeStyles((theme) => ({
@@ -88,8 +88,12 @@ const FeedbackForm = () => {
           </FormSubmit>
           {distanceFrom > 1 && (
             <Warning>
-              <AiFillWarning />{" "}
-              {language === "français" ? "Trop Loin" : "Too Far"}
+              <span>
+                <AiFillWarning />{" "}
+                {language === "français"
+                  ? "Vous êtes trop loin"
+                  : "You are too far away"}
+              </span>
             </Warning>
           )}
         </FormControl>
@@ -112,13 +116,13 @@ const Warning = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 5px;
-`;
 
-const Form = styled.form`
-  @media only screen and (max-width: 768px) {
-    width: "80%";
+  span {
+    font-size: 12px;
   }
 `;
+
+const Form = styled.form``;
 
 const FormSubmit = styled.button`
   margin-top: 5px;

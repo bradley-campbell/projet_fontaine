@@ -4,7 +4,7 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import SingleFountain from "./SingleFountain";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelected } from "../redux/actions/viewActions";
-import LanguageToggle from "../LanguageToggle";
+import LanguageToggle from "../Reusable/LanguageToggle";
 import { Overlay } from "../GlobalStyles";
 
 const Payment = () => {
@@ -43,16 +43,11 @@ const Content = styled.div`
   border-radius: 15px;
   width: 50%;
   min-height: 450px;
-  box-shadow: 10px 10px 10px 3px rgba(0,0,0,0.50);
+  box-shadow: 10px 10px 10px 3px rgba(0, 0, 0, 0.5);
 
-  @media only screen and (max-width: 768px){
-   
-   width: 80%;
-
-    }
-}
-
-
+  @media only screen and (max-width: 768px) {
+    width: 80%;
+  }
 `;
 
 const ExitButton = styled.button`

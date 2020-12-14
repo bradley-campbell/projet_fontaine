@@ -6,7 +6,7 @@ import {
   setCurrentLocation,
   setFountainData,
 } from "./redux/actions/viewActions";
-import Map from "./Map";
+import Map from "./Reusable/Map";
 import Header from "./Header";
 import Modal from "./InfoModal/InfoModal";
 import Footer from "./Footer";

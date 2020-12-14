@@ -1,16 +1,7 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { boroughs } from "./mapStyles";
-import { setCenter, setFountainData } from "./redux/actions/viewActions";
-import { makeStyles } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import { TwitterFollowButton } from "react-twitter-embed";
-import LanguageToggle from "./LanguageToggle";
-import BoroughSelect from "./BoroughSelect";
+import BoroughSelect from "./Reusable/BoroughSelect";
 
 const Footer = () => {
   return (

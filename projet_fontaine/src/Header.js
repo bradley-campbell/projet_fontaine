@@ -6,8 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCenter, setCurrentLocation } from "./redux/actions/viewActions";
 import { Icon } from "react-icons-kit";
 import { compass } from "react-icons-kit/ikons/compass";
-import BoroughSelect from "./BoroughSelect";
-import LanguageToggle from "./LanguageToggle";
+import BoroughSelect from "./Reusable/BoroughSelect";
+import LanguageToggle from "./Reusable/LanguageToggle";
 
 const Header = () => {
   const dispatch = useDispatch();

@@ -10,7 +10,6 @@ const {
 } = process.env;
 const assert = require("assert");
 var Twit = require("twit");
-const { json, response } = require("express");
 
 const options = {
   useNewUrlParser: true,
@@ -95,7 +94,6 @@ const updateFountainState = async (req, res) => {
     assert.equal(1, result.modifiedCount);
     res.status(200).json({ status: 200, _id });
   } catch (err) {
-    console.log(err.stack);
     res
       .status(500)
       .json({ status: 500, data: req.query, message: err.message });
@@ -111,18 +109,17 @@ const postTweet = async (req, res) => {
     boroughInfo: { twitterHandle },
   } = req.body;
 
-  console.log(req.body);
-  // T.post(
-  //   "statuses/update",
-  //   {
-  //     status: `Un.e utilisateur.trice a donné son avis sur la fontaine à boire no. ${_id}, située au parc/lieu: ${nom_parc_lieu} à ${arrondissement}, jugeant qu'elle est en "${feedback}".`,
-  //     lat: lat,
-  //     long: lng,
-  //   },
-  //   function (err, data, response) {
-  //     res.status(200).json({ status: 200, response: response });
-  //   }
-  // );
+  T.post(
+    "statuses/update",
+    {
+      status: `Un.e utilisateur.trice a donné son avis sur la fontaine à boire no. ${_id}, située au parc/lieu: ${nom_parc_lieu} (${arrondissement}), jugeant qu'elle est en "${feedback.data.FR}" - ${feedback.data.rating}.`,
+      lat: lat,
+      long: lng,
+    },
+    function (err, data, response) {
+      res.status(200).json({ status: 200, response: response });
+    }
+  );
 };
 
 module.exports = {

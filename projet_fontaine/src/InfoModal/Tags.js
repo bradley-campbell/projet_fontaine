@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { distance } from "../utils";
 import ReactTooltip from "react-tooltip";
-import { Icon, IconWrapper, Tag } from "../GlobalStyles";
+import { Icon, IconWrapper, Tag, TagText } from "../GlobalStyles";
 
 const Tags = () => {
   const {
     currentLocation,
-    selected: { intersection, proximité, nom_parc_lieu, note, état, lat, lng },
+    selected: { intersection, proximité, nom_parc_lieu, note, lat, lng },
   } = useSelector((state) => state.viewState);
 
   const { language } = useSelector((state) => state.viewState);
@@ -41,7 +41,9 @@ const Tags = () => {
         <IconWrapper>
           <Icon src="/park.svg" alt="park location icon" />
         </IconWrapper>
-        <span>{nom_parc_lieu}</span>
+        <TagText>
+          <span>{nom_parc_lieu}</span>
+        </TagText>
       </Tag>
       {proximité && (
         <Tag
@@ -51,7 +53,9 @@ const Tags = () => {
           <IconWrapper>
             <Icon src="/proximity.svg" alt="map proximity icon" />
           </IconWrapper>
-          <span>{proximité}</span>
+          <TagText>
+            <span>{proximité}</span>{" "}
+          </TagText>
         </Tag>
       )}
       {currentLocation && (
@@ -66,7 +70,9 @@ const Tags = () => {
           <IconWrapper>
             <Icon src="/distance.svg" alt="distance between two points icon" />
           </IconWrapper>
-          <span>{distanceFrom}</span>
+          <TagText>
+            <span>{distanceFrom}</span>{" "}
+          </TagText>
         </Tag>
       )}
       {note && (
@@ -77,7 +83,9 @@ const Tags = () => {
           <IconWrapper>
             <Icon src="/note.svg" alt="note pad icon" />
           </IconWrapper>
-          <span>{note}</span>
+          <TagText>
+            <span>{note}</span>{" "}
+          </TagText>
         </Tag>
       )}
       {intersection && (
@@ -85,7 +93,9 @@ const Tags = () => {
           <IconWrapper>
             <Icon src="/intersection.svg" alt="road intersection icon" />
           </IconWrapper>
-          <span>{intersection}</span>
+          <TagText>
+            <span>{intersection}</span>{" "}
+          </TagText>
         </Tag>
       )}
       <ReactTooltip />
@@ -99,5 +109,6 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   overflow: scroll;
+  height: fit-content;
   width: 100%;
 `;

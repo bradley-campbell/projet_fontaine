@@ -19,6 +19,5 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
-  },
-  "heroku-postbuild": "cd projet_fontaine && npm install && npm run build"
+  }
 }

@@ -1,7 +1,7 @@
 import React from "react";
-import { options } from "./mapStyles";
+import { options } from "../mapStyles";
 import { useSelector, useDispatch } from "react-redux";
-import { setSelected } from "./redux/actions/viewActions";
+import { setSelected } from "../redux/actions/viewActions";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 
 const Map = () => {
@@ -12,6 +12,12 @@ const Map = () => {
   const dispatch = useDispatch();
 
   const libraries = ["places"];
+
+  const handleSelect = async (_id) => {
+    let fountain = await fetch(`/fountain/${_id}`);
+    fountain = await fountain.json();
+    dispatch(setSelected(fountain.data));
+  };
 
   const { isLoaded, loadError } = useLoadScript(
     {
@@ -45,7 +51,7 @@ const Map = () => {
             anchor: new window.google.maps.Point(17.7, 54.2),
           }}
           onClick={() => {
-            dispatch(setSelected(marker));
+            handleSelect(marker._id);
           }}
         />
       ))}
@@ -54,7 +60,6 @@ const Map = () => {
           position={{ lat: currentLocation.lat, lng: currentLocation.lng }}
         />
       )}
-      
     </GoogleMap>
   );
 };
