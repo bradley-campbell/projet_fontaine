@@ -16,8 +16,12 @@
     "twit": "^2.2.11"
   },
   "proxy": "http://localhost:3333",
+  "engines": {
+    "node": "10.16.0"
+  },
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && run build"
   }
 }
