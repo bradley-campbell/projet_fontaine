@@ -13,3 +13,8 @@ FE: React.js, Javascript, Redux, Google Maps JavaScript API
 BE: Node.js, Express, Twitter API, Mongo DB
 
 NPM packages: React Icons, Material UI, Styled Components, Normalize.css, Moment, React Tooltip, Create React App, Twit, Nodemon
+
+
+<img src="screenshot2.png">
+
+<img src="screenshot1.png">
