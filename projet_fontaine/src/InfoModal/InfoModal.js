@@ -9,10 +9,10 @@ import { Overlay } from "../GlobalStyles";
 
 const Payment = () => {
   const dispatch = useDispatch();
-  const { selected } = useSelector((state) => state.viewState);
+  const { selected } = useSelector((state) => state.viewState); // Modal visibility depends on value of selected marker - if null, no visibility
 
   const closeModal = () => {
-    dispatch(setSelected(null));
+    dispatch(setSelected(null)); // When clicking the X icon, selected is set to null which makes make modal invisible
   };
 
   return (

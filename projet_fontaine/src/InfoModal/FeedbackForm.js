@@ -32,12 +32,14 @@ const FeedbackForm = () => {
   const dispatch = useDispatch();
 
   const handleChange = (event) => {
+    // Once user selects feedback, state is updated with feedback + current date
     setFeedback({ data: event.target.value, date: moment().format("D/MM/YY") });
   };
 
   let distanceFrom = null;
 
   if (currentLocation) {
+    // If user's current location is available, distance from selected marker is assigned to distanceFrom variable
     distanceFrom = distance(
       currentLocation.lat,
       currentLocation.lng,
@@ -50,8 +52,8 @@ const FeedbackForm = () => {
     <Wrapper>
       <Form
         onSubmit={(e) => {
-          handleSubmit(e, boroughs, selected, feedback);
-          dispatch(setSelected(null));
+          handleSubmit(e, boroughs, selected, feedback); // PATCH and POST requests called in handleSubmit to add feedback to DB and to tweet feedback
+          dispatch(setSelected(null)); // Selected is set to null after feedback submission and modal is closed - may change this to add a message after submission
         }}
       >
         <FormControl className={classes.formControl}>
@@ -82,11 +84,11 @@ const FeedbackForm = () => {
           </Select>
           <FormSubmit
             type="submit"
-            disabled={distanceFrom > 1 || !feedback || !currentLocation}
+            disabled={distanceFrom > 1 || !feedback || !currentLocation} // If user is more than 1 Km away from selected marker or has not shared their location, feedback submission is disabled
           >
             {language === "français" ? "Valider" : "Submit"}
           </FormSubmit>
-          {distanceFrom > 1 && (
+          {distanceFrom > 1 && ( // If user is more than 1 Km from selected marker, there is a warning message letting them know they are too far away
             <Warning>
               <span>
                 <AiFillWarning />{" "}

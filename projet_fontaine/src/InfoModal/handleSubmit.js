@@ -9,15 +9,13 @@ export const handleSubmit = async (e, boroughs, selected, feedback) => {
     }
   });
 
-  const { data, date } = feedback;
-  const { état } = selected;
+  const { data, date } = feedback; // Passed to function from function call in FeedbackForm component
 
   const patchObj = {
     method: "PATCH",
     body: JSON.stringify({
       data,
       date,
-      état: état,
     }),
     headers: {
       Accept: "application/json",
