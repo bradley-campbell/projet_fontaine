@@ -6,6 +6,7 @@ import BoroughSelect from "./Reusable/BoroughSelect";
 const Footer = () => {
   return (
     <Wrapper>
+      {/* BoroughSelect only visible in desktop version, appears in dropdown menu in mobile version */}
       <BoroughSelect />
       <TwitterFollowButton screenName={"eau_bot"} />
     </Wrapper>

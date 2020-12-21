@@ -4,6 +4,7 @@ const GlobalStyles = createGlobalStyle`
 
 *{
     font-family: 'Roboto', sans-serif;
+    font-display: swap; // Font will display a default style while loading font script
 }
 
 @media only screen and (max-width: 768px){

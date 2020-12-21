@@ -12,11 +12,10 @@ import LanguageToggle from "./Reusable/LanguageToggle";
 const Header = () => {
   const dispatch = useDispatch();
 
-  const { dropDown } = useSelector((state) => state.viewState);
+  const { dropDown } = useSelector((state) => state.viewState); // Toggles visibility of dropdown menu on mobile version
 
   const setLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
-      dispatch(setZoom(16));
       dispatch(
         setCurrentLocation({
           // Sets current location to state to allow for giving approx distance - seems less accurate on desktop, will test on mobile
@@ -31,6 +30,8 @@ const Header = () => {
           lng: position.coords.longitude,
         })
       );
+      // Sets map zoom to zoom in on users current location - for some reason it only works on the first click, not afterwards (will troubleshoot)
+      dispatch(setZoom(16));
     });
   };
 
@@ -40,6 +41,7 @@ const Header = () => {
         <MenuButton
           className="mobile"
           onClick={() => dispatch(toggleDropDown(dropDown))}
+          aria-label="Open drop down menu"
         >
           <GiHamburgerMenu size={25} color={"white"} />
         </MenuButton>
@@ -53,7 +55,10 @@ const Header = () => {
           <LangToggle className="desktop">
             <LanguageToggle />
           </LangToggle>
-          <MenuButton onClick={setLocation}>
+          <MenuButton
+            onClick={setLocation}
+            aria-label="Center map on user location"
+          >
             <Icon icon={compass} size={window.innerWidth > 768 ? 40 : 30} />
           </MenuButton>
         </LangMenu>

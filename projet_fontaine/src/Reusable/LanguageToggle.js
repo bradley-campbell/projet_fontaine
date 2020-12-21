@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { setLanguage } from "../redux/actions/viewActions";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({ // Styles used by Material UI element
   root: {
     display: "flex",
     flexDirection: "column",
@@ -23,7 +23,7 @@ const LanguageToggle = () => {
 
   const toggleLanguage = () => {
     const updatedLanguage = language === "français" ? "english" : "français";
-    dispatch(setLanguage(updatedLanguage));
+    dispatch(setLanguage(updatedLanguage)); // Sets language in Redux store so that all components will display copy in the correct language
   };
 
   return (
@@ -32,12 +32,13 @@ const LanguageToggle = () => {
         size="small"
         variant="contained"
         color="primary"
-        aria-label="contained primary button group"
+        aria-label="contained primary button group" // Aria-label necessary for accessibility/screen readers
       >
         <Button
           className="languageToggle"
           onClick={toggleLanguage}
-          disabled={language === "français"}
+          disabled={language === "français"} // Button disabled for active language, only one button may be enabled at a time
+          aria-label="Set language to french"
         >
           FR
         </Button>
@@ -45,6 +46,7 @@ const LanguageToggle = () => {
           className="languageToggle"
           onClick={toggleLanguage}
           disabled={language === "english"}
+          aria-label="Set language to english"
         >
           EN
         </Button>

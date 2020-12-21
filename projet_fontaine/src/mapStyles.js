@@ -1,4 +1,5 @@
 const mapStyles = [
+  // Main styles taken from Snazzy Maps "Grass is greener. Water is bluer". Added labels for parks/ sport complexes
   {
     stylers: [
       {
@@ -33,7 +34,7 @@ const mapStyles = [
     ],
   },
   {
-    featureType: "poi.park",
+    featureType: "poi.park", // Shows labels for public parks/green spaces, where most fountains are located (Place of interest)
     elementType: "labels",
     stylers: [
       {
@@ -42,7 +43,7 @@ const mapStyles = [
     ],
   },
   {
-    featureType: "poi.sports_complex",
+    featureType: "poi.sports_complex", // Shows labels for sports complexes on map - in many cases municipal complexes may have exterior fountains nearby (Place of interest)
     elementType: "labels",
     stylers: [
       {
@@ -52,7 +53,7 @@ const mapStyles = [
   },
 
   {
-    featureType: "administrative.neighborhood",
+    featureType: "administrative.neighborhood", // Shows neighborhood names on map
     elementType: "labels",
     stylers: [
       {
@@ -93,15 +94,16 @@ const mapStyles = [
 export const options = {
   backgroundColor: "#96bff6",
   styles: mapStyles,
-  disableDefaultUI: true,
-  zoomControl: true,
+  disableDefaultUI: true, // Removes default UI (street view, satelite view etc.)
+  zoomControl: true, // Adds zoom control buttons back in after disabling other default UI elements
   minZoom: 11,
   maxZoom: 20,
   noClear: true,
-  // gestureHandling: "cooperative",
+  // gestureHandling: "cooperative"
 };
 
 export const boroughs = {
+  // List of each borough including, unique ID, center point for map, and twitter handle to pass to backend
   2: {
     borough: "Ahuntsic-Cartierville",
     lat: 45.5447,

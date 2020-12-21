@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import allReducers from "./redux";
 
 const store = createStore(
-  allReducers,
+  allReducers, // Currently using combineReducers even though there is only one reducer (viewReducer) - may add more depending on future functionality so leaving as is
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
