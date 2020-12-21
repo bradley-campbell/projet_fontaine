@@ -2,8 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { distance } from "../utils";
-import ReactTooltip from "react-tooltip";
-import { Icon, IconWrapper, Tag, TagText } from "../GlobalStyles";
+import ReactTooltip from "react-tooltip"; // Used to provide text information about tags if icons are unclear
+import { Icon, IconWrapper, Tag, TagText } from "../GlobalStyles"; // These are defined in GlobalStyles as I also use them for feedback tag, which appears in another component
 
 const Tags = () => {
   const {
@@ -21,16 +21,16 @@ const Tags = () => {
       currentLocation.lng,
       lat,
       lng
-    ).toFixed(3);
+    ).toFixed(3); // Initiall a number but later converted to a string to include kilometer or meter symbol
 
     dist > 1
       ? (distanceFrom = `${dist} km`)
-      : (distanceFrom = `${dist * 1000} m`);
+      : (distanceFrom = `${dist * 1000} m`); // If distance of marker from user is less than 1 km, number is converted to meters
   }
 
   return (
     <Wrapper>
-      <Tag
+      <Tag // Location or park name tag, no conditional rendering as each entry has this field
         style={{ backgroundColor: "#B4DC69" }}
         data-tip={
           language === "français"
@@ -45,7 +45,7 @@ const Tags = () => {
           <span>{nom_parc_lieu}</span>
         </TagText>
       </Tag>
-      {proximité && (
+      {proximité && ( // If there is data for the proximité field, tag will render with data
         <Tag
           style={{ backgroundColor: "orange" }}
           data-tip={language === "français" ? "À proximité" : "Proximity to"}
@@ -58,7 +58,7 @@ const Tags = () => {
           </TagText>
         </Tag>
       )}
-      {currentLocation && (
+      {currentLocation && ( // Current location tag provides distance from user if they allowed their location to be shared - Chrome desktop doesn't seem to be very precise, Firefox is spot on, Safari requires https - won't allow locaton sharing even with local host
         <Tag
           style={{ backgroundColor: "orange" }}
           data-tip={
@@ -75,7 +75,7 @@ const Tags = () => {
           </TagText>
         </Tag>
       )}
-      {note && (
+      {note && ( // If there is a note field i.e. "distanc approx.", this tag will render
         <Tag
           style={{ backgroundColor: "orange" }}
           data-tip={language === "français" ? "Remarque" : "Note"}
@@ -88,7 +88,7 @@ const Tags = () => {
           </TagText>
         </Tag>
       )}
-      {intersection && (
+      {intersection && ( // If there is an intersection field this tag will render -  i.e. "Jeanne-Mance/Mont-Royal"
         <Tag style={{ backgroundColor: "yellow" }} data-tip="Intersection">
           <IconWrapper>
             <Icon src="/intersection.svg" alt="road intersection icon" />

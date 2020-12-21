@@ -4,7 +4,7 @@ import { options } from "../mapStyles";
 import { useSelector } from "react-redux";
 import Tags from "./Tags";
 import FeedbackForm from "./FeedbackForm";
-import { Icon, IconWrapper, Tag, TagText } from "../GlobalStyles";
+import { Icon, IconWrapper, Tag, TagText } from "../GlobalStyles"; // Feedback tag uses same styling as other tags from Tags component
 
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 
@@ -31,7 +31,7 @@ const SingleFountain = () => {
       <h1>{selected.arrondissement}</h1>
       <Tags />
       <Map>
-        <GoogleMap
+        <GoogleMap // Also using map in modal, however it only contains one marker, therefore did not reuse main map component
           mapContainerStyle={{
             width: "100%",
             height: "30vh",
@@ -44,10 +44,10 @@ const SingleFountain = () => {
           <Marker
             position={{ lat: +selected.lat, lng: +selected.lng }}
             icon={{
-              url: "Eaubot-full.svg",
+              url: "Eaubot-full.svg", // Robot icon is used for marker in modal instead of pin from main map
               scaledSize: new window.google.maps.Size(35.4, 54.2),
               origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(17.7, 54.2),
+              anchor: new window.google.maps.Point(17.7, 54.2), // Marker is offset to make sure it is centered on the location of marker
             }}
           />
         </GoogleMap>
