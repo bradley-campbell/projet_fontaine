@@ -29,7 +29,13 @@ const getAllEntries = async (req, res) => {
   await client.connect();
 
   const db = client.db("projet_fontaine");
-  const fountains = await db.collection("fountains").find().toArray();
+  const fountains = await db
+    .collection("fountains")
+    .find()
+    .project({ lng: 1, lat: 1 }) // Used projection to only query for ID, lat and lng only
+    .toArray();
+
+  console.log(fountains);
 
   fountains.length === 0
     ? res.status(404).json({ status: 400, error: "No data was found" })
@@ -61,7 +67,15 @@ const getEntriesByBorough = async (req, res) => {
   await client.connect();
   const db = client.db("projet_fontaine");
 
-  const fountains = await db.collection("fountains").find().toArray();
+  const fountains = await db
+    .collection("fountains")
+    .find({ arrondissement: borough })
+    .project({ lng: 1, lat: 1 })
+    .toArray();
+  // Changed to find only entries from matching boroughs instead of filtering all results and return only id, lat, lng
+
+  console.log(borough);
+  console.log(fountains);
 
   fountains.length === 0
     ? res
@@ -69,7 +83,7 @@ const getEntriesByBorough = async (req, res) => {
         .json({ status: 400, error: "An unknown error has occured" })
     : res.status(200).json({
         status: 200,
-        data: fountains.filter((item) => item.arrondissement === borough),
+        data: fountains,
       });
 
   client.close();
