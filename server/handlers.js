@@ -122,12 +122,13 @@ const postTweet = async (req, res) => {
   const {
     feedback,
     fountainData: { _id, arrondissement, nom_parc_lieu, lat, lng },
-    boroughInfo: { twitterHandle }, // Twitter handle for borough where fountain is located - @MTL_Ville if borough has no Twitter account
+    boroughInfo: { twitterHandle }, // Twitter handle for borough where fountain is located - default is @MTL_Ville if borough has no Twitter account
   } = req.body;
 
   T.post(
     "statuses/update",
     {
+      // Borough Twitter handle has not been added to tweet yet, will add on deploy
       status: `Un.e utilisateur.trice a donné son avis sur la fontaine à boire no. ${_id}, située au parc/lieu: ${nom_parc_lieu} (${arrondissement}), jugeant qu'elle est en "${feedback.data.FR}" - ${feedback.data.rating}.`,
       lat: lat,
       long: lng,
