@@ -54,7 +54,9 @@ const getEntryById = async (req, res) => {
     const fountain = await db.collection("fountains").findOne({ _id });
     res.status(200).json({ status: 200, data: fountain });
   } catch (err) {
-    status(500).json({ status: 500, error: "An unknown error has occured" });
+    res
+      .status(500)
+      .json({ status: 500, error: "An unknown error has occured" });
   }
 
   client.close();
@@ -120,7 +122,7 @@ const postTweet = async (req, res) => {
   const {
     feedback,
     fountainData: { _id, arrondissement, nom_parc_lieu, lat, lng },
-    boroughInfo: { twitterHandle },
+    boroughInfo: { twitterHandle }, // Twitter handle for borough where fountain is located - @MTL_Ville if borough has no Twitter account
   } = req.body;
 
   T.post(
