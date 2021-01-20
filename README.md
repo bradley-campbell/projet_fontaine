@@ -20,6 +20,4 @@ NPM packages: React Icons, Material UI, Styled Components, Normalize.css, Moment
 
 Demo video: 
 
-Demo video: 
-
 [![Application demo video with link](http://img.youtube.com/vi/MwnkRziHKxs/0.jpg)](http://www.youtube.com/watch?v=MwnkRziHKxs "Eau Bot Demo")
